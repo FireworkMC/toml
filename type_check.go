@@ -83,6 +83,14 @@ func (p *parser) typeOfArray(types []tomlType) tomlType {
 	theType := types[0]
 	for _, t := range types[1:] {
 		if !typeEqual(theType, t) {
+			if (theType == tomlFloat || t == tomlFloat) && (theType == tomlInteger || t == tomlInteger) {
+				for i, t := range types {
+					if t == tomlInteger {
+						types[i] = tomlFloat
+					}
+				}
+				return p.typeOfArray(types)
+			}
 			p.panicf("Array contains values of type '%s' and '%s', but "+
 				"arrays must be homogeneous.", theType, t)
 		}

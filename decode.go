@@ -367,10 +367,21 @@ func (md *MetaData) unifyString(data interface{}, rv reflect.Value) error {
 func (md *MetaData) unifyFloat64(data interface{}, rv reflect.Value) error {
 	if num, ok := data.(float64); ok {
 		switch rv.Kind() {
+
 		case reflect.Float32:
 			fallthrough
 		case reflect.Float64:
 			rv.SetFloat(num)
+		default:
+			panic("bug")
+		}
+		return nil
+	} else if num, ok := data.(int64); ok {
+		switch rv.Kind() {
+		case reflect.Float32:
+			fallthrough
+		case reflect.Float64:
+			rv.SetFloat(float64(num))
 		default:
 			panic("bug")
 		}
