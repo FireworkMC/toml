@@ -43,9 +43,8 @@ type Primitive struct {
 	context   Key
 }
 
-// DEPRECATED!
-//
-// Use MetaData.PrimitiveDecode instead.
+//PrimitiveDecode decode primitive value
+//Deprecated: Use MetaData.PrimitiveDecode instead.
 func PrimitiveDecode(primValue Primitive, v interface{}) error {
 	md := MetaData{decoded: make(map[string]bool)}
 	return md.unify(primValue.undecoded, rvalue(v))
